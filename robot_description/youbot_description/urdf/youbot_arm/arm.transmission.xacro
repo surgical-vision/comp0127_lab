@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!-- reduction ratio doesn't affect the model-->
+	<!-- reduction ratio must not to be 0-->
+	<xacro:macro name="youbot_arm_transmission" params="name">
+
+		<transmission name="${name}_trans_1">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${name}_motor_1">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${name}_joint_1">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+		<transmission name="${name}_trans_2">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${name}_motor_2">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${name}_joint_2">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+		<transmission name="${name}_trans_3">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${name}_motor_3">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${name}_joint_3">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+		<transmission name="${name}_trans_4">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${name}_motor_4">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${name}_joint_4">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+		<transmission name="${name}_trans_5">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${name}_motor_5">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${name}_joint_5">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+	</xacro:macro>
+
+</robot>
