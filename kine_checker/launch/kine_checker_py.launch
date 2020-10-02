@@ -1,4 +1,0 @@
-<?xml version="1.0" ?>
-<launch>
-    <node name="youbot_kine_node" pkg="kine_checker" type="kine_checker_node.py" output="screen"/>
-</launch>
