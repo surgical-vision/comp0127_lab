@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Run publisher_node -->
+    <node name="talker" pkg="lab02example04" type="publisher_node.py"/>
+    <!-- Run subscriber_node -->
+    <node name="listener" pkg="lab02example04" type="subscriber_node.py" output="screen"/>
+
+</launch>
