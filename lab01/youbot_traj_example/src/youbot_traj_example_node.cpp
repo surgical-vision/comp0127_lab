@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
         ros::spinOnce();
         sleep(2);
 
-        if (t == 11)
+        if (t == 10)
             t = 0;
     }
 
