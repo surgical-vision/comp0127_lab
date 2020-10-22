@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Run publisher_node -->
+    <node name="publisher_node" pkg="sol_lab2task1" type="sol_lab2task1_pub" output="screen"/>
+    <!-- Run subscriber_node -->
+    <node name="subscriber_node" pkg="sol_lab2task1" type="sol_lab2task1_sub" output="screen"/>
+
+</launch>

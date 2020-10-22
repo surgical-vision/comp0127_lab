@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Run publisher_node -->
+    <node name="publisher_node" pkg="sol_lab2task2" type="publisher_node.py"/>
+    <!-- Run subscriber_node -->
+    <node name="subscriber_node" pkg="sol_lab2task2" type="subscriber_node.py" output="screen"/>
+
+</launch>
