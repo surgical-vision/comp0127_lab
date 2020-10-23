@@ -1,0 +1,11 @@
+# coursework 1 template
+This stack contains the code template for achieving the first coursework. Students must fill in their code to this template and submit the whole stack as part of the coursework submission.
+
+cw1q4 is a package for question 4 in the first coursework. Students should write a code to create three "ROS service" to convert rotation representations as stated in the instruction. The services are defined in cw1q4_srv.
+
+cw1q4_srv contains the definition of the services used in cw1q4 package. Students should change the parameters in the three definitions as appropriate. Please do not change the name of the three services as this will invoke an error.
+
+cw1q5c and cw1q7b contain the code templates for question 5c and question 7b, respectively. The work in both packages are very similar to the one shown in lab04example01. The only difference is they are based on different models of the KUKA youbot manipulator. There are three things to keep in mind when working on these questions,
+1. Even if your code in cw1q5c is perfect, the frames you define will not align perfectly with the model because the DH parameters are based on the simplified version. This discrepancy will not affect your marks in any way.
+2. cw1q7b requires you to read the xacro file. It is basically a robot model in a simulation, defining where robot parts, frames, links or joints are in the model. This question may take you some time to work it through, but it is expected as it is the hardest question of this coursework. The teaching team WILL NOT give help on how to read the xacro file as this is a part of your own finding to try to understand the robot model.
+3. The joint position in the hardware interface and the one when you do forward kinematics are usually similar and most of the time, you are not required to change anything in the joint value. However, they are not in youbot manipulator. Please take a look at the "origin, rpy" and "limit" in the xacro file noted in question 7 and work it out how to change the joint input accordingly. Without any modification, your robot arm may end up moving in the opposite direction or have an offset in the joint position you have not accounted for.
