@@ -1,0 +1,4 @@
+geometry_msgs/Quaternion q
+geometry_msgs/Point input_p
+---
+geometry_msgs/Point output_p
