@@ -6,12 +6,6 @@
 
 KDL::JntArray joint_values;
 
-void update_joint_values(const sensor_msgs::JointState::ConstPtr& msg)
-{
-    for (int i = 0; i < 6; i++)
-        joint_values.data[i] = msg->position.at(i);
-}
-
 int main(int argc, char **argv)
 {
 
@@ -19,8 +13,6 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
 
     joint_values.resize(6);
-
-    ros::Subscriber joint_sub = nh.subscribe<sensor_msgs::JointState>("/joint_states", 10, update_joint_values);
 
     robot_kinematic h_kine;
     ros::Rate loop_rate(10);
