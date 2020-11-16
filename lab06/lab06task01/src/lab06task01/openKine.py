@@ -22,7 +22,7 @@ class open_kinematic(object):
 
         self.joint_state_sub = rospy.Subscriber('/joint_states', JointState, self.joint_state_callback,
                                                         queue_size=5)
-
+        self.current_joint_position = [0.0, 0.0, 0.0, 0.0]
         self.pose_broadcaster = tf2_ros.TransformBroadcaster()
 
         self.joint_names = ['joint1', 'joint2', 'joint3', 'joint4']
@@ -49,11 +49,11 @@ class open_kinematic(object):
         return A
 
     def joint_state_callback(self, msg):
-        current_joint_position = [0.0, 0.0, 0.0, 0.0]
+        
         for i in range(0, 4):
-            current_joint_position[i] = msg.position[i]
+            self.current_joint_position[i] = msg.position[i]
 
-        current_pose = self.forward_kine(current_joint_position, 4)
+        current_pose = self.forward_kine(self.current_joint_position, 4)
         self.broadcast_pose(current_pose)
 
     def forward_kine(self, joint, frame):
