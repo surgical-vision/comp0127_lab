@@ -11,7 +11,7 @@ def youbot_traj():
 
     rospack = rospkg.RosPack()
 
-    path = rospack.get_path('lab07_example01')
+    path = rospack.get_path('lab07example01')
     bag = rosbag.Bag(path + '/../lab7data.bag')
 
     traj_pub = rospy.Publisher('/EffortJointInterface_trajectory_controller/command', JointTrajectory, queue_size=5)
@@ -31,7 +31,7 @@ def youbot_traj():
         my_pt = JointTrajectoryPoint()
 
         if len(msg.position) != 0:
-            print len(msg.position)
+
             for i in range(0, 5):
                 my_pt.positions.append(msg.position[i])
                 my_pt.velocities.append(msg.velocity[i]) #Try commenting-uncommenting these two lines to see the difference in the trajectory.

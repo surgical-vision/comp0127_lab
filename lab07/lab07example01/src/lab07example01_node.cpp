@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 
     my_pt.positions.resize(5);
     my_pt.velocities.resize(5);
+    my_pt.accelerations.resize(5);
 
     rosbag::View view(mybag, rosbag::TopicQuery(topics));
 
@@ -73,5 +74,6 @@ int main(int argc, char **argv)
     ros::spinOnce();
 
     mybag.close();
+    std::cout << "Finished uploading trajectory" << std::endl;
     return 5;
 }

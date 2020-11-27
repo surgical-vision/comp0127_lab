@@ -10,7 +10,7 @@ def lab07_example00_write():
 
     rospack = rospkg.RosPack()
 
-    path = rospack.get_path('lab07_example00')
+    path = rospack.get_path('lab07example00')
     bag = rosbag.Bag(path + '/../example00_data.bag', 'w')
 
     try:
