@@ -64,7 +64,9 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
-
+<build_depend>tf2_eigen</build_depend>
+  <build_export_depend>tf2_eigen</build_export_depend>
+  <exec_depend>tf2_eigen</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
