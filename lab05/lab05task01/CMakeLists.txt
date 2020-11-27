@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   sensor_msgs
+  tf2_eigen
 )
 
 find_package(Eigen3 REQUIRED)
