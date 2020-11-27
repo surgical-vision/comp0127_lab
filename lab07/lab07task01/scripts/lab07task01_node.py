@@ -4,7 +4,6 @@ import rospy
 import rospkg
 import rosbag
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-from lab06task02.youbotKine import youbot_kinematic
 
 def youbot_traj():
 
