@@ -15,12 +15,16 @@ void robot_kinematic::init(std::string base_link, std::string ee_link)
     KDL_joint = KDL::JntArray(NrJoints);
 
     current_joint_position.resize(NrJoints);
+    current_joint_velocity.resize(NrJoints);
 }
 
 void robot_kinematic::joint_state_callback(const sensor_msgs::JointState::ConstPtr &q)
 {
     for (int i = 0; i < NrJoints; i++)
-        this->current_joint_position.data(i) = q->position.at(i);
+    {
+        current_joint_position.data(i) = q->position.at(i);
+        current_joint_velocity.data(i) = q->velocity.at(i);
+    }
 }
 
 
@@ -55,57 +59,40 @@ KDL::JntArray robot_kinematic::inverse_kinematics_closed(KDL::Frame desired_pose
     return required_joint;
 }
 
-MatrixXd robot_kinematic::getB(VectorXd joint_val)
+MatrixXd robot_kinematic::getB(KDL::JntArray joint_val)
 {
-    KDL::JntArray q;
     KDL::JntSpaceInertiaMatrix KDL_B = KDL::JntSpaceInertiaMatrix(NrJoints);
     KDL::ChainDynParam dyn = KDL::ChainDynParam(kine_chain, KDL::Vector(0, 0, -9.8));
 
-    q.resize(NrJoints);
-    for (int i = 0; i < NrJoints; i++)
-        q.data(i) = joint_val(i);
-
-    dyn.JntToMass(q, KDL_B);
+    dyn.JntToMass(joint_val, KDL_B);
 
     return KDL_B.data;
 }
 
 
-VectorXd robot_kinematic::getC(VectorXd joint_val, VectorXd joint_vel)
+VectorXd robot_kinematic::getC(KDL::JntArray joint_val, KDL::JntArray joint_vel)
 {
 
-    KDL::JntArray q, q_vel;
+
     KDL::JntArray KDL_C = KDL::JntArray(NrJoints);
 
 
     KDL::ChainDynParam dyn = KDL::ChainDynParam(kine_chain, KDL::Vector(0, 0, -9.8));
 
-    q.resize(NrJoints);
-    q_vel.resize(NrJoints);
-    for (int i = 0; i < NrJoints; i++){
-        q.data(i) = joint_val(i);
-        q_vel.data(i) = joint_vel(i);
-    }
 
-
-    dyn.JntToCoriolis(q, q_vel, KDL_C);
+    dyn.JntToCoriolis(joint_val, joint_vel, KDL_C);
 
     return KDL_C.data;
 }
 
 
-VectorXd robot_kinematic::getG(VectorXd joint_val)
+VectorXd robot_kinematic::getG(KDL::JntArray joint_val)
 {
     KDL::ChainDynParam dyn = KDL::ChainDynParam(kine_chain, KDL::Vector(0, 0, -9.8));
 
-    KDL::JntArray q;
     KDL::JntArray gravity = KDL::JntArray(NrJoints);
 
-    q.resize(NrJoints);
-    for (int i = 0; i < NrJoints; i++)
-        q.data(i) = joint_val(i);
-
-    dyn.JntToGravity(q, gravity);
+    dyn.JntToGravity(joint_val, gravity);
 
     return gravity.data;
 }

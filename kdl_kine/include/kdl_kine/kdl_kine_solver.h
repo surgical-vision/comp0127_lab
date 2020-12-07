@@ -30,13 +30,14 @@ public:
     KDL::JntArray KDL_joint;
     KDL::Tree kdl_tree;
     KDL::JntArray current_joint_position;
+    KDL::JntArray current_joint_velocity;
 
 
     void init(std::string base_link, std::string ee_link);
     void joint_state_callback(const sensor_msgs::JointState::ConstPtr &q);
-    MatrixXd getB(VectorXd joint_val);
-    VectorXd getC(VectorXd joint_val, VectorXd joint_vel);
-    VectorXd getG(VectorXd joint_val);
+    MatrixXd getB(KDL::JntArray joint_val);
+    VectorXd getC(KDL::JntArray joint_val, KDL::JntArray joint_vel);
+    VectorXd getG(KDL::JntArray joint_val);
     void setup_kdl_chain();
     KDL::Jacobian KDLjacob(KDL::JntArray current_joint_position);
     KDL::Frame KDLfkine(KDL::JntArray current_joint_position);

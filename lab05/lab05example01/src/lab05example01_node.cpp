@@ -12,8 +12,6 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "robotis_jacob_node");
     ros::NodeHandle nh;
 
-    joint_values.resize(6);
-
     robot_kinematic h_kine;
     ros::Rate loop_rate(10);
 

@@ -20,6 +20,7 @@ class robot_kinematic(object):
         self.kine_chain = self.kine_tree.getChain(base_link, ee_link)
         self.NJoints = self.kine_chain.getNrOfJoints()
         self.current_joint_position = PyKDL.JntArray(self.NJoints)
+        self.current_joint_velocity = PyKDL.JntArray(self.NJoints)
         self.fk_solver = PyKDL.ChainFkSolverPos_recursive(self.kine_chain)
         self.ik_solver = PyKDL.ChainIkSolverPos_LMA(self.kine_chain)
         self.jac_calc = PyKDL.ChainJntToJacSolver(self.kine_chain)
@@ -29,6 +30,7 @@ class robot_kinematic(object):
         # Copies joint position into KDL JntArray
         for i in range(0, self.NJoints):
             self.current_joint_position[i] = msg.position[i]
+            self.current_joint_velocity[i] = msg.velocity[i]
 
     def forward_kinematics(self, joint):
         #This "joint" is PyKDL.JntArray. The output is a PyKDL.Frame. 
