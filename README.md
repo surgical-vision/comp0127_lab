@@ -1,6 +1,13 @@
 # comp0127_lab
 Collection of packages for the lab sessions in COMP0127 Robotic Systems Engineering
 
+development folder:
+- Main area of lab and coursework solutions and work in progress.
+- Once finalized, can be moved to release folder or the version the students recieve.
+
+release folder:
+- Student version of code for lab and coursework.
+- During course, zip appropriate folder for coursework and post on moodle.
 
 Dependencies:
 `sudo apt install ros-melodic-controller-manager ros-melodic-joint-state-controller ros-melodic-effort-controllers ros-melodic-gazebo-ros-control ros-melodic-joint-trajectory-controller ros-melodic-velocity-controllers ros-melodic-ros-controllers ros-melodic-ros-control`
