@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>youbot_description</name>
+  <version>0.8.1</version>
+  <description>Robot descriptions in form of URDF files and meshes</description>
+
+  <maintainer email="nowak@locomotec.com">Walter Nowak</maintainer>
+  <maintainer email="blumenthal@locomotec.com">Sebastian Blumenthal</maintainer>
+
+  <license>GPLv3</license>
+
+  <!--url type="website">http://github.com/youbot/youbot_description</url-->
+
+  <author email="frederik.hegger@h-brs.de">Frederik Heger</author> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+</package>
