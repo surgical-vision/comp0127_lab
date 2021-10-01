@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+    
+	<!-- Launches the controllers according to the hardware interface selected -->
+	<!-- Everythings is spawned under a namespace with the same name as the robot's. -->
+	<arg name="robot_name" default="arm" />
+
+	<!-- Loads joint controller configurations from YAML file to parameter server -->
+	<rosparam file="$(find youbot_simulator)/config/youbot_control.yaml" command="load" />
+
+	<arg name="trajectory_interface" default="false"/>
+
+	<group unless="$(arg trajectory_interface)">
+		<arg name="controllers" value="joint_state_controller EffortJointInterface_J1_controller EffortJointInterface_J2_controller EffortJointInterface_J3_controller EffortJointInterface_J4_controller EffortJointInterface_J5_controller" />
+		<!-- Loads the controllers -->
+		<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" args="$(arg controllers) --shutdown-timeout 2" />
+	</group>
+
+	<group if="$(arg trajectory_interface)">
+		<arg name="controllers" value="joint_state_controller EffortJointInterface_trajectory_controller"/> 
+		<!-- Loads the controllers -->
+		<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" args="$(arg controllers) --shutdown-timeout 2" />
+	</group>
+
+	<!-- Converts joint states to TF transforms for rviz, etc -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen">
+	</node>
+
+</launch>

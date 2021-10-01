@@ -1,0 +1,98 @@
+#youbot:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 200  
+  
+  # Controllers for singular joint ------------------------------------
+
+  # Forward Position Controllers ---------------------------------------
+  PositionJointInterface_J1_controller:
+    type: position_controllers/JointPositionController
+    joint: arm_joint_1
+
+  PositionJointInterface_J2_controller:
+    type: position_controllers/JointPositionController
+    joint: arm_joint_2
+    
+  PositionJointInterface_J3_controller:
+    type: position_controllers/JointPositionController
+    joint: arm_joint_3
+    
+  PositionJointInterface_J4_controller:
+    type: position_controllers/JointPositionController
+    joint: arm_joint_4
+    
+  PositionJointInterface_J5_controller:
+    type: position_controllers/JointPositionController
+    joint: arm_joint_5
+    
+  # Effor Joint Interfaces
+  EffortJointInterface_J1_controller:
+    type: effort_controllers/JointPositionController
+    joint: arm_joint_1
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  EffortJointInterface_J2_controller:
+    type: effort_controllers/JointPositionController
+    joint: arm_joint_2
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  EffortJointInterface_J3_controller:
+    type: effort_controllers/JointPositionController
+    joint: arm_joint_3
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  EffortJointInterface_J4_controller: 
+    type: effort_controllers/JointPositionController
+    joint: arm_joint_4
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  EffortJointInterface_J5_controller:
+    type: effort_controllers/JointPositionController
+    joint: arm_joint_5
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  # Trajectory Controllers ---------------------------------------
+  #   
+     
+  # Forward Position Controllers ---------------------------------------
+  PositionJointInterface_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints: 
+      - arm_joint_1
+      - arm_joint_2
+      - arm_joint_3
+      - arm_joint_4
+      - arm_joint_5
+
+    constraints:
+      goal_time: 0.5                   # Override default
+
+    state_publish_rate:  200            # Override default
+    action_monitor_rate: 200            # Override default
+    stop_trajectory_duration: 0        # Override default
+
+  EffortJointInterface_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - arm_joint_1
+      - arm_joint_2
+      - arm_joint_3
+      - arm_joint_4
+      - arm_joint_5
+      
+      # VALUES ARE NOT CORRECT !
+    gains:
+      arm_joint_1: {p: 500,  d: 30, i: 15, i_clamp: 30}
+      arm_joint_2: {p: 200,  d: 10, i: 10, i_clamp: 30}
+      arm_joint_3: {p: 100,  d: 10, i: 15, i_clamp: 30}
+      arm_joint_4: {p: 100,  d: 7, i: 12, i_clamp: 30}
+      arm_joint_5: {p: 500,  d: 5, i: 5, i_clamp: 30}
+
+    constraints:
+      goal_time: 0.5                   # Override default
+
+    state_publish_rate:  25            # Override default
+    action_monitor_rate: 30            # Override default
+    stop_trajectory_duration: 0        # Override default
