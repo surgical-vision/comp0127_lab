@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="gui" default="false"/>
+    <arg name="rviz" default="true"/>
+    <arg name="trajectory_interface" default="false"/>
+
+    <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+   <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="recording" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find youbot_description)/robots/youbot_arm_only.urdf.xacro'"/>
+
+    <node name="youbot_load_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model youbot" respawn="false" output="screen"/>
+
+    <node name="trail_node" pkg="youbot_rviz_example" type="youbot_rviz_example_node"/>
+    <node name="trajectory_generator" pkg="youbot_traj_example" type="youbot_traj_example_node"/>
+
+    <include file="$(find youbot_simulator)/launch/youbot_controller.launch">
+        <arg name="trajectory_interface" value="$(arg trajectory_interface)"/>
+    </include>
+
+    <group if="$(arg rviz)">
+        <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false"
+              args="-d $(find youbot_simulator)/config/youbot.rviz" output="screen"/>
+    </group>
+
+</launch>
