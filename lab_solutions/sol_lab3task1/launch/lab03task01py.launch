@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-
-    <!-- Run publisher_node -->
-    <node name="request_node" pkg="sol_lab3task1" type="sol_lab3task1_req_node.py" output="screen"/>
-    <!-- Run subscriber_node -->
-    <node name="service_node" pkg="sol_lab3task1" type="sol_lab3task1_srv_node.py"/>
-
-</launch>
