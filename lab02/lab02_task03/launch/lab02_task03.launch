@@ -18,8 +18,8 @@
 
     <node name="trail_node" pkg="youbot_rviz_example" type="youbot_rviz_example_node"/>
 
-    <!-- TODO: Fill in the appropriate fields -->
-    <node name="trajectory_generator" pkg="" type=""/>
+    <!-- Fill in the appropriate fields -->
+    <node name="trajectory_generator" pkg="lab02_task03" type="lab02_task03.py"/>
 
     <include file="$(find youbot_simulator)/launch/youbot_controller.launch">
         <arg name="trajectory_interface" value="$(arg trajectory_interface)"/>

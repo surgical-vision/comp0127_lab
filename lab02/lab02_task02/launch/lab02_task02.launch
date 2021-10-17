@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- TODO: Fill in the appropriate fields -->
-
     <!-- Run publisher_node -->
-    <node name="publisher_node" pkg="" type=""/>
+    <node name="publisher_node" pkg="lab02_task02" type="publisher_node.py"/>
     <!-- Run subscriber_node -->
-    <node name="subscriber_node" pkg="" type="" output="screen"/>
+    <node name="subscriber_node" pkg="lab02_task02" type="subscriber_node.py" output="screen"/>
 
 </launch>
