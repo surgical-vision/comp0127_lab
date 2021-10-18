@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find youbot_description)/robots/youbot_arm_only.urdf.xacro'"/>
+
+    <!-- send joint values -->
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui"/>
+
+    <!-- Combine joint values -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node pkg="cw1q5" type="cw1q5d_node.py" name="cw1q5d_publisher"/>
+  <!-- Show in Rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find youbot_simulator)/config/youbot.rviz"/>
+
+</launch>
