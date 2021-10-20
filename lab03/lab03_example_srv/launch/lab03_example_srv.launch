@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Run publisher_node -->
+    <node name="server" pkg="lab03_example_srv" type="server.py"/>
+    <!-- Run subscriber_node -->
+    <node name="client" pkg="lab03_example_srv" type="client.py" output="screen"/>
+
+</launch>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Run publisher_node -->
+    <node name="server" pkg="lab03_example_msg" type="lab03_example01_pub.py"/>
+    <!-- Run subscriber_node -->
+    <node name="client" pkg="lab03_example_msg" type="lab03_example01_sub.py" output="screen"/>
+
+</launch>
