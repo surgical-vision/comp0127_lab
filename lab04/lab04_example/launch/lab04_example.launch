@@ -11,10 +11,7 @@
 
     <!-- Combine joint values -->
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
-
-    <!--TODO: Add the lab04 package node -->
-
-
+    <node name="open_fkine_node" pkg="lab04_example" type="lab04_example.py" output="screen"/>
   <!-- Show in Rviz -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find open_manipulator_description)/rviz/open_manipulator_links_hidden.rviz"/>
 </launch>
