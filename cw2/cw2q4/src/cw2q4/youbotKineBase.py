@@ -12,10 +12,13 @@ class YoubotKinematicBase(object):
         # Robot variables
         # Identify class used when broadcasting tf with a suffix
         self.tf_suffix = tf_suffix
+	
+	# --> This was update on 20/11/2021. Feel free to use your own code.
         youbot_dh_parameters = {'a': [-0.033, 0.155, 0.135, +0.002, 0.0],
                                 'alpha': [pi / 2, 0.0, 0.0, pi / 2, pi],
                                 'd': [0.145, 0.0, 0.0, 0.0, -0.185],
                                 'theta': [pi, pi / 2, 0.0, -pi / 2, pi]}
+
         self.dh_params = youbot_dh_parameters.copy()
 
         # Set current joint position
@@ -67,7 +70,7 @@ class YoubotKinematicBase(object):
         self.pose_broadcaster.sendTransform(transform)
 
     def forward_kinematics(self, joint_readings, up_to_joint=5):
-        """This function solve forward kinematics by multiplying frame transformation up until a specified
+        """This function solves forward kinematics by multiplying frame transformation up until a specified
         frame number. The frame transformation used in the computation are derived from dh parameters found in the
         init method and joint_readings.
         Args:
@@ -106,6 +109,7 @@ class YoubotKinematicBase(object):
         assert isinstance(theta, (int, float)), "wrong input type for theta"
         A = np.zeros((4, 4))
 
+	# --> This was updated on 20/11/2021. Feel free to use your own code.
         A[0, 0] = np.cos(theta)
         A[0, 1] = -np.sin(theta) * np.cos(alpha)
         A[0, 2] = np.sin(theta) * np.sin(alpha)

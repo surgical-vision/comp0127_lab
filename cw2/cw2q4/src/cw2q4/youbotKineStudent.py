@@ -8,7 +8,7 @@ class YoubotKinematicStudent(YoubotKinematicBase):
     def __init__(self):
         super(YoubotKinematicStudent, self).__init__(tf_suffix='student')
 
-        # Set the offset for theta
+        # Set the offset for theta --> This was updated on 20/11/2021. Feel free to use your own code.
         youbot_joint_offsets = [170.0 * np.pi / 180.0,
                                 -65.0 * np.pi / 180.0,
                                 146 * np.pi / 180,
@@ -41,6 +41,8 @@ class YoubotKinematicStudent(YoubotKinematicBase):
         assert up_to_joint <= len(self.dh_params['a'])
 
         T = np.identity(4)
+
+	# --> This was updated on 20/11/2021. Feel free to use your own code.
         # Apply offset and polarity to joint readings (found in URDF file)
         joints_readings = [sign * angle for sign, angle in zip(self.youbot_joint_readings_polarity, joints_readings)]
 
@@ -70,13 +72,16 @@ class YoubotKinematicStudent(YoubotKinematicBase):
 
         # Your code starts here ----------------------------
 
-
+        # For your solution to match the KDL Jacobian, z0 needs to be set [0, 0, -1] instead of [0, 0, 1], since that is how its defined in the URDF.
+        # Both are correct.
+        
         # Your code ends here ------------------------------
+
         assert jacobian.shape == (6, 5)
         return jacobian
 
     def check_singularity(self, joint):
-        """Check for singularity condition given robot joints. Coursework 2 Question 4d.
+        """Check for singularity condition given robot joints. Coursework 2 Question 4c.
         Reference Lecture 5 slide 30.
 
         Args:
@@ -88,10 +93,10 @@ class YoubotKinematicStudent(YoubotKinematicBase):
         """
         assert isinstance(joint, list)
         assert len(joint) == 5
+        
         # Your code starts here ----------------------------
 
-
-
         # Your code ends here ------------------------------
+
         assert isinstance(singularity, bool)
         return singularity
