@@ -2,7 +2,7 @@
 
 import numpy as np
 import PyKDL
-from youbotKineBase import YoubotKinematicBase
+from cw2q4.youbotKineBase import YoubotKinematicBase
 from kdl_parser_py.urdf import treeFromUrdfModel
 
 from urdf_parser_py.urdf import URDF
