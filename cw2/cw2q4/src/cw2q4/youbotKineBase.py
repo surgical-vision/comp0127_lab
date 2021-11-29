@@ -45,8 +45,8 @@ class YoubotKinematicBase(object):
 
         """
 
-        self.current_joint_position = msg.position
-        current_pose = self.forward_kinematics(msg.position)
+        self.current_joint_position = list(msg.position)
+        current_pose = self.forward_kinematics(self.current_joint_position)
         self.broadcast_pose(current_pose)
 
     def broadcast_pose(self, pose):
