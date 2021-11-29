@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import numpy as np
-from youbotKineBase import YoubotKinematicBase
+from cw2q4.youbotKineBase import YoubotKinematicBase
 
 
 class YoubotKinematicStudent(YoubotKinematicBase):
