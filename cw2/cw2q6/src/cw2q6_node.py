@@ -156,7 +156,7 @@ class YoubotTrajectoryPlanning(object):
             target_checkpoint_tfs (np.ndarray): the state of the robot joints. In a youbot those are revolute
             num_points (int): Number of intermediate points between checkpoints.
         Returns:
-            full_checkpoint_tfs: 4x4x(5xnum_points) homogeneous transformations matrices describing the full desired
+            full_checkpoint_tfs: 4x4x(4xnum_points + 5) homogeneous transformations matrices describing the full desired
             poses of the end-effector position.
         """
 
