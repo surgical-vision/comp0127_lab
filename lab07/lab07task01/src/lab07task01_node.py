@@ -32,26 +32,40 @@ def youbot_traj():
     # this is a somewhat unnecessary step, the template given in CW2 Q6 load_targets, loads the joint targets and
     # Cartesian checkpoints in this same way,
     # your code starts here ------------------------------
-
+    for i in range(joint_targets.shape[1]):
+        joint_targets[:, i] = hardcoded_joint_targets[i]
     # your code ends here ------------------------------
 
     # Compute the forward kinematics using KDL and publish the Cartesian positions of these checkpoints. The publish
     # checkpoint method needs the transformation matrix.
     # your code starts here ------------------------------
-
+    checkpoints = np.zeros((4, 4, joint_targets.shape[1]), dtype=float)
+    for i in range(joint_targets.shape[1]):
+        checkpoints[:, :, i] = kdl_youbot.forward_kinematics(list(joint_targets[:, i]))
     # your code ends here ------------------------------
 
     rospy.sleep(2.0)
 
     # Call the publish_checkpoints function to publish the found Cartesian positions of the loaded joints
     # your code starts here ------------------------------
-
+    publish_checkpoints(checkpoint_pub, checkpoints)
     # your code ends here ------------------------------
 
     # Create a trajectory message and publish to get the robot to move to this checkpoints
     traj = JointTrajectory()
     # your code starts here ------------------------------
+    dt = 2
+    t = 10
+    for i in range(joint_targets.shape[1]):
+        traj_point = JointTrajectoryPoint()
+        traj_point.positions = joint_targets[:, i]
+        t = t + dt
+        traj_point.time_from_start.secs = t
+        traj.points.append(traj_point)
 
+    traj.header.stamp = rospy.Time.now()
+    traj.joint_names = ["arm_joint_1", "arm_joint_2", "arm_joint_3", "arm_joint_4", "arm_joint_5"]
+    traj_pub.publish(traj)
     # your code ends here ------------------------------
 
 
