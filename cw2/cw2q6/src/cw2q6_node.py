@@ -103,7 +103,7 @@ class YoubotTrajectoryPlanning(object):
         """This function takes the checkpoint transformations and computes the order of checkpoints that results
         in the shortest overall path.
         Args:
-            checkpoints_tf (np.ndarray): The target checkpoint 4x4 transformations.
+            checkpoints_tf (np.ndarray): The target checkpoints transformations as a 4x4x5 numpy ndarray.
         Returns:
             sorted_order (np.array): An array of size 5 indicating the order of checkpoint
             min_dist:  (float): The associated distance to the sorted order giving the total estimate for travel
