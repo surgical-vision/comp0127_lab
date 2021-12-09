@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="iiwa_torque_transmission" params="robot_name">
+    <transmission name="${robot_name}_torque_tran_1">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_1">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_torque_actuator_1">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+	
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_torque_tran_2">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_2">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_torque_actuator_2">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+	
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_torque_tran_3">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_3">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_torque_actuator_3">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+	
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_torque_tran_4">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_4">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_torque_actuator_4">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+	
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_torque_tran_5">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_5">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_torque_actuator_5">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+	
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_torque_tran_6">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_6">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_torque_actuator_6">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+	
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_torque_tran_7">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_7">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_torque_actuator_7">
+	<hardwareInterface>ForceTorqueSensorInterface</hardwareInterface>
+	
+      </actuator>
+    </transmission>
+  </xacro:macro>
+</robot>
