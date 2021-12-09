@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="hardware_interface" default="PositionJointInterface"/>
+    <arg name="robot_name" default="iiwa" />
+    <arg name="robot_description" default="$(find iiwa_description)/urdf/iiwa14.urdf.xacro"/>
+
+    <param name="robot_description" command="xacro --inorder '$(arg robot_description)' hardware_interface:=$(arg hardware_interface) robot_name:=$(arg robot_name)" />
+    <arg name="rviz" default="true"/>
+    <!-- send joint values -->
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui">
+        <param name="use_gui" value="TRUE"/>
+        <param name="publish_default_velocities" value="TRUE"/>
+        <!--<rosparam param="source_list">["robotis/real_joint_states"]</rosparam>-->
+    </node>
+
+    <!-- Combine joint values -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node name="kuka_dynamics_node" pkg="lab09task01" type="lab09task01_node.py" output="screen"/>
+    <!-- Show in Rviz -->
+    <node name="static_tf_pub_world_to_gazebo_world" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0  0 0 0 1 map world" />
+    <group if="$(arg rviz)">
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="-d $(find lab09task01)/config/iiwa14.rviz" output="screen"/>
+    </group>
+</launch>
