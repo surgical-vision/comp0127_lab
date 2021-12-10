@@ -27,19 +27,11 @@ class Iiwa14KDLDynamic:
         self.NJoints = self.kine_chain.getNrOfJoints()
         # KDL solvers
         self.fk_solver = PyKDL.ChainFkSolverPos_recursive(self.kine_chain)
+        self.dyn_solver = PyKDL.ChainDynParam(self.kine_chain, PyKDL.Vector(0, 0, -9.8))
 
-        # Create a dynamic solver based on ChainDynParam from PyKDL: http://docs.ros.org/en/hydro/api/orocos_kdl/html/classKDL_1_1ChainDynParam.html
-
-        # -- Your code starts here --
-
-        # --  Your code ends here  --
-
-        # Set current joint position: initialize two attributes previous_joint_position and previous_t to store a
-        # n(num_of_joints)x1 numpy array and a float respectively. These will store the joint values and the timestamp
-        # at time t-1.
-        # -- Your code starts here --
-
-        # --  Your code ends here  --
+        # Set current joint position
+        self.previous_joint_position = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.previous_t = 0
 
         # Set joint limits
         self.joint_limit_min = [-170 * pi / 180, -120 * pi / 180, -170 * pi / 180, -120 * pi / 180, -170 * pi / 180,
@@ -48,13 +40,12 @@ class Iiwa14KDLDynamic:
                                 120 * pi / 180, 175 * pi / 180]
 
         # Setup transform broadcaster and joint states subscriber
-        # Define a subscriber that will subscribe joint_states topic and will call compute_dynamics as a callback.
+        # Define a subscriber that will subscribe joint_states topic and will call print_BCG as a callback.
         # -- Your code starts here --
-
-        # --  Your code ends here  --
-
+        self.sub_dynamics = rospy.Subscriber('/joint_states', JointState, self.compute_dynamics,
+                                             queue_size=5)
         self.pose_broadcaster = TransformBroadcaster()
-
+        # --  Your code ends here  --
 
     def compute_dynamics(self, msg):
         """ ROS callback function for joint states of the robot. Broadcasts the current pose of end effector and
@@ -64,22 +55,22 @@ class Iiwa14KDLDynamic:
         """
         # Grab the positions from the JointState message and set to current_joint_position
         # -- Your code starts here --
-
+        current_joint_position = msg.position
         # --  Your code ends here  --
 
         # Compute the current pose using the given forward kinematics function and broadcast the pose with the
         # self.broadcast_pose function
         # -- Your code starts here --
-
+        current_pose = self.forward_kinematics(current_joint_position)
         # -- Your code ends here --
         self.broadcast_pose(current_pose)
 
         # Compute the joint velocities based on the joint positions and the msg timestamp. Store the previous timestamp
         # and previous joint position
         # -- Your code starts here --
-
+        current_t = msg.header.stamp.secs + msg.header.stamp.nsecs * np.power(10.0, -9)
+        joint_velocities = list((np.array(current_joint_position) - np.array(self.previous_joint_position)) / (current_t - self.previous_t))
         # -- Your code ends here --
-
         self.previous_joint_position = current_joint_position
         self.previous_t = current_t
 
@@ -89,12 +80,14 @@ class Iiwa14KDLDynamic:
         print(joint_velocities)
         print('The current robot pose: ')
         print(current_pose)
+        print('B(q): ')
+        print(self.get_B(current_joint_position))
 
-        # Call and print getB, getC and getG results
+        print('C(q, qdot) * qdot: ')
+        print(self.get_C_times_qdot(current_joint_position, joint_velocities))
 
-        # -- Your code starts here --
-
-        # --  Your code ends here  --
+        print('g(q): ')
+        print(self.get_G(current_joint_position))
 
     def forward_kinematics(self, joints_readings):
         """This function solve forward kinematics by multiplying frame transformation up until a specified
@@ -141,12 +134,14 @@ class Iiwa14KDLDynamic:
         Returns:
             B (numpy.ndarray): The output is a numpy 7*7 matrix describing the inertia matrix B.
         """
+        q = PyKDL.JntArray(self.NJoints)
         KDL_B = PyKDL.JntSpaceInertiaMatrix(self.NJoints)
         # Use the dynamic solver to compute the B matrix
         # For each q index of JntArray, set the that index of joint_readings. Use the kdl_jnt_array_to_list function.
         # Call self.dyn_solver with q and KDL_B
         # -- Your code starts here --
-
+        q = self.list_to_kdl_jnt_array(joint_readings)
+        self.dyn_solver.JntToMass(q, KDL_B)
         # -- Your code ends here --
         return self.kdl_to_mat(KDL_B)
 
@@ -159,7 +154,8 @@ class Iiwa14KDLDynamic:
         Returns:
             C (numpy.ndarray): The output is a numpy 7*1 matrix describing the Coriolis terms C times joint velocities.
         """
-
+        q = PyKDL.JntArray(self.NJoints)
+        qdot = PyKDL.JntArray(self.NJoints)
         KDL_C = PyKDL.JntArray(self.NJoints)
 
         # Use the dynamic solver to compute the C matrix.
@@ -167,7 +163,9 @@ class Iiwa14KDLDynamic:
         # Use the kdl_jnt_array_to_list function.
         # Call self.dyn_solver.JntToCoriolis with q, qdot and KDL_C
         # -- Your code starts here --
-
+        q = self.list_to_kdl_jnt_array(joint_readings)
+        qdot = self.list_to_kdl_jnt_array(joint_velocities)
+        self.dyn_solver.JntToCoriolis(q, qdot, KDL_C)
         # -- Your code ends here --
         return self.kdl_jnt_array_to_list(KDL_C)
 
@@ -179,14 +177,15 @@ class Iiwa14KDLDynamic:
         Returns:
             G (numpy.ndarray): The output is a numpy 7*1 numpy array describing the gravity matrix g.
         """
-
+        q = PyKDL.JntArray(self.NJoints)
         KDL_G = PyKDL.JntArray(self.NJoints)
 
         # Use the dynamic solver to compute the C matrix.
         # For each q index of JntArray, set the that index of joint_readings. Use the kdl_jnt_array_to_list function.
         # Call self.dyn_solver.JntToCoriolis with q and KDL_G
         # -- Your code starts here --
-
+        q = self.list_to_kdl_jnt_array(joint_readings)
+        self.dyn_solver.JntToGravity(q, KDL_G)
         # -- Your code ends here --
         return self.kdl_jnt_array_to_list(KDL_G)
 
