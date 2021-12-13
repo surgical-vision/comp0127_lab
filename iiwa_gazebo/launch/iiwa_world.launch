@@ -17,7 +17,7 @@
     
     <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-	<arg name="world_name" value="$(find cw3_launch)/worlds/world_c.world" if="$(eval question == 3)"/>
+	<arg name="world_name" value="$(find cw3q5)/worlds/world_c.world" if="$(eval question == 3)"/>
         <arg name="world_name" value="$(find iiwa_gazebo)/worlds/iiwa.world" if="$(eval question == 1)"/>
         <arg name="debug" value="$(arg debug)" />
         <arg name="gui" value="$(arg gui)" />
