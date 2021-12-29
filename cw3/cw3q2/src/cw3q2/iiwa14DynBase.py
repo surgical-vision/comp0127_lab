@@ -58,7 +58,7 @@ class Iiwa14DynamicBase(object):
                                 120 * pi / 180, 175 * pi / 180]
 
         # ROS related
-        self.joint_state_sub = rospy.Subscriber('/joint_states', JointState, self.joint_state_callback,
+        self.joint_state_sub = rospy.Subscriber('/iiwa/joint_states', JointState, self.joint_state_callback,
                                                 queue_size=5)
         self.traj_publisher = rospy.Publisher('/EffortJointInterface_trajectory_controller/command', JointTrajectory,
                                               queue_size=5)

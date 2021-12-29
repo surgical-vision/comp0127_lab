@@ -2,7 +2,7 @@
 
 import numpy as np
 import PyKDL
-from iiwa14DynBase import Iiwa14DynamicBase
+from cw3q2.iiwa14DynBase import Iiwa14DynamicBase
 from kdl_parser_py.urdf import treeFromUrdfModel
 
 from urdf_parser_py.urdf import URDF

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import numpy as np
-from iiwa14DynBase import Iiwa14DynamicBase
+from cw3q2.iiwa14DynBase import Iiwa14DynamicBase
 
 
 class Iiwa14DynamicRef(Iiwa14DynamicBase):
