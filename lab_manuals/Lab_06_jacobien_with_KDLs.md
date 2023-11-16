@@ -7,6 +7,13 @@ Liang 
 
 This document contains an example of how to use KDL library to compute the Jacobian for the Youbot manipulator. Knowledge of how to use KDL library to compute forward kinematics and Jacobian is useful for checking your answers in courseworks 2 and 3.
 
+# **Prerequisites**
+If you never install kdl-parser, run:
+```
+sudo apt install ros-noetic-kdl-parser-py
+```
+
+
 # **Jacobian computation using KDL (Example)**
 
 For this example, we are going to use the same script we used in the previous lab. Along with the subscriber that computes forward kinematics we will produce another subscriber that takes joint readings from the joint_state_publisher, computes the Jacobian and prints it.
