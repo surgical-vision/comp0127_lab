@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>urdfdom_py</name>
+  <version>0.4.6</version>
+  <description>Python implementation of the URDF parser.</description>
+
+  <license>BSD</license>
+
+  <author>Thomas Moulard</author>
+  <author>David Lu</author>
+  <author>Kelsey Hawkins</author>
+  <author>Antonio El Khoury</author>
+  <author>Eric Cousineau</author>
+  <author email="isucan@gmail.com">Ioan Sucan</author>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+
+  <url type="website">http://wiki.ros.org/urdfdom_py</url>
+  <url type="bugtracker">https://github.com/ros/urdf_parser_py/issues</url>
+  <url type="repository">https://github.com/ros/urdf_parser_py</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 2">python-setuptools</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 3">python3-setuptools</buildtool_depend>
+
+  <exec_depend>rospy</exec_depend>
+
+  <exec_depend condition="$ROS_PYTHON_VERSION == 2">python-yaml</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION == 3">python3-yaml</exec_depend>
+
+  <test_depend condition="$ROS_PYTHON_VERSION == 2">python-mock</test_depend>
+  <test_depend condition="$ROS_PYTHON_VERSION == 3">python3-mock</test_depend>
+
+</package>

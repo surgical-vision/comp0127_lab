@@ -1,0 +1,14 @@
+README.md
+setup.py
+src/urdf_parser_py/__init__.py
+src/urdf_parser_py/sdf.py
+src/urdf_parser_py/urdf.py
+src/urdf_parser_py/xml_reflection/__init__.py
+src/urdf_parser_py/xml_reflection/basics.py
+src/urdf_parser_py/xml_reflection/core.py
+src/urdfdom_py.egg-info/PKG-INFO
+src/urdfdom_py.egg-info/SOURCES.txt
+src/urdfdom_py.egg-info/dependency_links.txt
+src/urdfdom_py.egg-info/top_level.txt
+test/test_urdf.py
+test/test_urdf_error.py
