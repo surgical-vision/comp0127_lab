@@ -32,9 +32,9 @@ class YoubotKDL:
 
         self.sub_fk = rospy.Subscriber('/joint_states', JointState, self.fkine_wrapper)
 
-        # TODO: Create a subscriber that subscribes /joint_states and uses 'print_jacobian()' to compute and print the jacobian of our Youobot.
-        #
-        #
+        # TODO: Create a subscriber that subscribes /joint_states and uses 'print_jacobian()' to compute and print the jacobian of our Youbot.
+        self.sub_j = rospy.Subscriber('/joint_states', JointState, self.print_jacobian)
+        
 
         # FK KDL solver
         self.fk_solver = kdl.ChainFkSolverPos_recursive(self.kine_chain)
@@ -42,7 +42,7 @@ class YoubotKDL:
         # TODO: create a KDL jacobian solver that takes a kinematic chain and outputs the Jacobian
         # You may look here: http://docs.ros.org/en/electric/api/orocos_kdl/html/classKDL_1_1Jacobian.html (C++)
         # Or here: http://docs.ros.org/en/diamondback/api/kdl/html/python/kinematic_solvers.html (Python)
-        #
+        self.jac_calc = kdl.ChainJntToJacSolver(self.kine_chain)
         #
         #
 
@@ -58,17 +58,18 @@ class YoubotKDL:
         return pose
 
     # TODO: Fill the inputs of this function.
-    def print_jacobian(self, FILL_ME):
-        j = self.get_jacobian('FILL ME')
+    def print_jacobian(self, joints_readings):
+        j = self.get_jacobian(joints_readings.position)
         print(j)
 
     # TODO: Here you will have to use the jacobian solver object you have created in __init__ to compute the jacobian.
     # What are the inputs? Pay attention to the output data type. You'll have to use 'convert_kdl_to_mat' to convert it to a numpy array.
-    def get_jacobian(self, FILL_ME):
-        #
-        #
-        #
-        return FILL_ME
+    def get_jacobian(self, joints_readings):
+        joints_kdl= self.list_to_kdl_jnt_array(joints_readings)
+        jacobian_kdl = kdl.Jacobian(size=self.kine_chain.getNrOfJoints())
+        self.jac_calc.JntToJac(joints_kdl, jacobian_kdl)
+        jac = self.convert_kdl_to_mat(jacobian_kdl)
+        return jac
 
     # This function is a callback for the subscriber for joint_states.
     # The transformation is computed with forward kinematics then the transform is broadcasted.
