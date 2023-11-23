@@ -14,8 +14,10 @@
 
 	<node name="youbot_load_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model youbot" respawn="false" output="screen"/>
 
+
 	<node name="trail_node" pkg="youbot_trail_rviz_cw2" type="youbot_trail_rviz_cw2_node"/>
 	<node name="youbot_traj_cw2" pkg="cw2q6" type="cw2q6_node.py" output="screen"/>
+
 	
   <include file="$(find youbot_simulator)/launch/youbot_controller.launch">
     <arg name="trajectory_interface" value="$(arg trajectory_interface)"/>
