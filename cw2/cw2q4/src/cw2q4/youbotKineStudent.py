@@ -8,8 +8,12 @@ class YoubotKinematicStudent(YoubotKinematicBase):
     def __init__(self):
         super(YoubotKinematicStudent, self).__init__(tf_suffix='student')
 
-        # Set the offset for theta --> This will be updated on 22/11/2022. Feel free to use your own code.
-        youbot_joint_offsets = []
+        # Set the offset for theta --> This was updated on 23/11/2023. Feel free to use your own code.
+        youbot_joint_offsets = [170.0 * np.pi / 180.0,
+                                -65.0 * np.pi / 180.0,
+                                146 * np.pi / 180,
+                                -102.5 * np.pi / 180,
+                                -167.5 * np.pi / 180]
 
         # Apply joint offsets to dh parameters
         self.dh_params['theta'] = [theta + offset for theta, offset in
@@ -38,8 +42,18 @@ class YoubotKinematicStudent(YoubotKinematicBase):
 
         T = np.identity(4)
 
-	# --> This will be updated updated on 22/11/2022. Feel free to use your own code.
+	# --> This was updated on 23/11/2023. Feel free to use your own code.
 
+        # Apply offset and polarity to joint readings (found in URDF file)
+        joints_readings = [sign * angle for sign, angle in zip(self.youbot_joint_readings_polarity, joints_readings)]
+
+        for i in range(up_to_joint):
+            A = self.standard_dh(self.dh_params['a'][i],
+                                 self.dh_params['alpha'][i],
+                                 self.dh_params['d'][i],
+                                 self.dh_params['theta'][i] + joints_readings[i])
+            T = T.dot(A)
+            
         assert isinstance(T, np.ndarray), "Output wasn't of type ndarray"
         assert T.shape == (4, 4), "Output had wrong dimensions"
         return T
