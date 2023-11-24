@@ -5,15 +5,15 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from cw2q4.youbotKineKDL import YoubotKinematicKDL
 from visualization_msgs.msg import Marker
 
-"""
-Lab07Task01: Publishing a joint trajectory and CW2 Q6 Primer
-In this lab, the task is to complete the youbot_traj function. You are given hardcoded_joint_targets. The tasks are as
-follows.
-1. Load the hardcoded_joint_targets into a numpy array
-2. Compute the Cartesian checkpoints of the given joint_targets
-3. Publish the checkpoints using the publish_checkpoints function
-4. Publish a joint trajectory message with the joint targets. The youbot should then go to each checkpoint
-"""
+
+# Lab07Task01: Publishing a joint trajectory and CW2 Q6 Primer
+# In this lab, the task is to complete the youbot_traj function. You are given hardcoded_joint_targets. The tasks are as
+# follows.
+# 1. Load the hardcoded_joint_targets into a numpy array
+# 2. Compute the Cartesian checkpoints of the given joint_targets
+# 3. Publish the checkpoints using the publish_checkpoints function
+# 4. Publish a joint trajectory message with the joint targets. The youbot should then go to each checkpoint
+
 
 def youbot_traj():
     rospy.init_node('lab07_youbot_traj')
@@ -22,7 +22,7 @@ def youbot_traj():
 
     # Create trajectory publisher and a checkpoint publisher to visualize checkpoints
     traj_pub = rospy.Publisher('/EffortJointInterface_trajectory_controller/command', JointTrajectory, queue_size=5)
-    checkpoint_pub = rospy.Publisher("checkpoint_positions", Marker, queue_size=5)
+    checkpoint_pub = rospy.Publisher("/visualization_marker", Marker, queue_size=5)
 
     # Joint values
     hardcoded_joint_targets = [[4.71, 1.38, -3.21, 1.79, 1.73], [1.44, 0.71, -2.51, 1.39, 1.6]]
@@ -34,11 +34,18 @@ def youbot_traj():
     # Cartesian checkpoints in this same way,
     # your code starts here ------------------------------
 
+    for i in range(joint_targets.shape[1]):
+        joint_targets[:, i] = hardcoded_joint_targets[i]
+
     # your code ends here ------------------------------
 
     # Compute the forward kinematics using KDL and publish the Cartesian positions of these checkpoints. The publish
     # checkpoint method needs the transformation matrix.
     # your code starts here ------------------------------
+
+    checkpoint = np.zeros([4, 4, joint_targets.shape[1]])
+    for i in range(joint_targets.shape[1]):
+        checkpoint[:, :, i] = kdl_youbot.forward_kinematics(list(joint_targets[:, i]))
 
     # your code ends here ------------------------------
 
@@ -52,6 +59,19 @@ def youbot_traj():
     # Create a trajectory message and publish to get the robot to move to this checkpoints
     traj = JointTrajectory()
     # your code starts here ------------------------------
+
+    t = 10
+    dt = 2
+    for i in range(joint_targets.shape[1]):
+        traj_point = JointTrajectoryPoint()
+        traj_point.positions = joint_targets[:, i]
+        t = t + dt
+        traj_point.time_from_start.secs = t
+        traj.points.append(traj_point)
+
+    traj.header.stamp = rospy.Time.now()
+    traj.joint_names = ["arm_joint_1", "arm_joint_2", "arm_joint_3", "arm_joint_4", "arm_joint_5"]
+    traj_pub.publish(traj)
 
     # your code ends here ------------------------------
 
