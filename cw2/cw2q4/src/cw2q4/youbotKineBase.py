@@ -12,11 +12,11 @@ class YoubotKinematicBase(object):
         # Identify class used when broadcasting tf with a suffix
         self.tf_suffix = tf_suffix
 	
-	# --> This will be updated on 22/11/2022. Feel free to use your own code.
-        youbot_dh_parameters = {'a': [],
-                                'alpha': [],
-                                'd': [],
-                                'theta': []}
+	# --> This was updated on 24/11/2022. Feel free to use your own code.
+        youbot_dh_parameters = {'a': [-0.033, 0.155, 0.135, +0.002, 0.0],
+                                'alpha': [np.pi/2, 0.0, 0.0, np.pi/2, np.pi],
+                                'd': [0.145, 0.0, 0.0, 0.0, -0.185],
+                                'theta': [np.pi, np.pi/2, 0.0, -np.pi/2, np.pi]}
 
         self.dh_params = youbot_dh_parameters.copy()
 
@@ -35,6 +35,7 @@ class YoubotKinematicBase(object):
         self.traj_publisher = rospy.Publisher('/EffortJointInterface_trajectory_controller/command', JointTrajectory,
                                               queue_size=5)
         self.pose_broadcaster = tf2_ros.TransformBroadcaster()
+
 
     def joint_state_callback(self, msg):
         """ ROS callback function for joint states of the robot. Broadcasts the current pose of end effector.
