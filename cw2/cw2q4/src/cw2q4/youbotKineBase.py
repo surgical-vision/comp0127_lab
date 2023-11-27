@@ -36,6 +36,7 @@ class YoubotKinematicBase(object):
                                               queue_size=5)
         self.pose_broadcaster = tf2_ros.TransformBroadcaster()
 
+
     def joint_state_callback(self, msg):
         """ ROS callback function for joint states of the robot. Broadcasts the current pose of end effector.
 
