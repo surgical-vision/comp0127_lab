@@ -12,12 +12,12 @@ class YoubotKinematicBase(object):
         # Identify class used when broadcasting tf with a suffix
         self.tf_suffix = tf_suffix
 	
-	# --> This will be updated on 22/11/2022. Feel free to use your own code.
-        youbot_dh_parameters = {'a': [],
-                                'alpha': [],
-                                'd': [],
-                                'theta': []}
-
+	# --> Updated on 27/11/2023. Feel free to use your own code.
+        youbot_dh_parameters = {'a': [-0.033, 0.155, 0.135, +0.002, 0.0],
+                                'alpha': [np.np.pi / 2, 0.0, 0.0, np.pi / 2, np.pi],
+                                'd': [0.145, 0.0, 0.0, 0.0, -0.185],
+                                'theta': [np.pi, np.pi / 2, 0.0, -np.pi / 2, np.pi]}
+        
         self.dh_params = youbot_dh_parameters.copy()
 
         # Set current joint position
@@ -108,7 +108,22 @@ class YoubotKinematicBase(object):
         assert isinstance(theta, (int, float)), "wrong input type for theta"
         A = np.zeros((4, 4))
 
-	# --> This will be updated on 21/11/2022. Feel free to use your own code.
+	# --> Updated on 27/11/2023. Feel free to use your own code.
+        A[0, 0] = np.cos(theta)
+        A[0, 1] = -np.sin(theta) * np.cos(alpha)
+        A[0, 2] = np.sin(theta) * np.sin(alpha)
+        A[0, 3] = a * np.cos(theta)
+
+        A[1, 0] = np.sin(theta)
+        A[1, 1] = np.cos(theta) * np.cos(alpha)
+        A[1, 2] = -np.cos(theta) * np.sin(alpha)
+        A[1, 3] = a * np.sin(theta)
+
+        A[2, 1] = np.sin(alpha)
+        A[2, 2] = np.cos(alpha)
+        A[2, 3] = d
+
+        A[3, 3] = 1.0
 
         assert isinstance(A, np.ndarray), "Output wasn't of type ndarray"
         assert A.shape == (4, 4), "Output had wrong dimensions"
