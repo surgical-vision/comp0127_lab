@@ -140,7 +140,7 @@ class Iiwa14KDLDynamic:
         # TODO:
         # Use the dynamic solver to compute the B matrix
         # For each q index of JntArray, set the that index of joint_readings. Use the kdl_jnt_array_to_list function.
-        # Call self.dyn_solver with q and KDL_B
+        # Call self.dyn_solver.JntToMass with q and KDL_B
         # -- Your code starts here --
 
         # -- Your code ends here --
@@ -183,7 +183,7 @@ class Iiwa14KDLDynamic:
         # TODO:
         # Use the dynamic solver to compute the C matrix.
         # For each q index of JntArray, set the that index of joint_readings. Use the kdl_jnt_array_to_list function.
-        # Call self.dyn_solver.JntToCoriolis with q and KDL_G
+        # Call self.dyn_solver.JntToGravity with q and KDL_G
         # -- Your code starts here --
 
         # -- Your code ends here --
