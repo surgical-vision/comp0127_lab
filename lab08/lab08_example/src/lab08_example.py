@@ -3,8 +3,6 @@ import numpy as np
 import rospy
 from cw2q4.youbotKineKDL import YoubotKinematicKDL
 
-# Lab07Task02: Extracting the position only Jacobian. Useful when you are only considering Cartesian position and the
-# orientation of pose is not needed.
 
 # Recall pose representation as x_e = [p_e, phi_e]^T, p_e = [p_ex, p_ey, p_ez]^T, phi_e = [r_ex, r_ey, r_ez]^T.
 # Joints are represented as q = [q_1, q_2 ..., q_nN]^T, Lecture 5 slide 2
