@@ -14,7 +14,7 @@ class YoubotKinematicBase(object):
 	
 	# --> Updated on 27/11/2023. Feel free to use your own code.
         youbot_dh_parameters = {'a': [-0.033, 0.155, 0.135, +0.002, 0.0],
-                                'alpha': [np.np.pi / 2, 0.0, 0.0, np.pi / 2, np.pi],
+                                'alpha': [np.pi / 2, 0.0, 0.0, np.pi / 2, np.pi],
                                 'd': [0.145, 0.0, 0.0, 0.0, -0.185],
                                 'theta': [np.pi, np.pi / 2, 0.0, -np.pi / 2, np.pi]}
         
