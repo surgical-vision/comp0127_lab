@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="rviz" default="true"/>
+    <arg name="robot_description" default="$(find iiwa_description)/urdf/iiwa14.urdf.xacro" />
+    <!-- Loads the world. -->
+    <include file="$(find iiwa_gazebo)/launch/iiwa_world.launch">
+        <arg name="hardware_interface" value="hardware_interface/EffortJointInterface" />
+        <arg name="robot_name" value="iiwa" />
+        <arg name="model" value="iiwa14" />
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <!-- Spawn controllers - it uses a JointTrajectoryController -->
+    <group  ns="iiwa">
+        <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+            <arg name="hardware_interface" value="hardware_interface/EffortJointInterface" />
+            <arg name="controllers" value="joint_state_controller EffortJointInterface_trajectory_controller" />
+            <arg name="robot_name" value="iiwa" />
+            <arg name="model" value="iiwa14" />
+        </include>
+    </group>
+      
+    <node name="static_tf_pub_world_to_gazebo_world" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0  0 0 0 1 map world" />
+
+    <!-- Add your node here -->
+    
+    <group if="$(arg rviz)">
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="-d $(find cw3q5)/config/iiwa14.rviz" output="screen"/>
+    </group>
+
+</launch>
